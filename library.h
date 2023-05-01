@@ -1,0 +1,6 @@
+#ifndef CONTROLLER_LIBRARY_H
+#define CONTROLLER_LIBRARY_H
+
+void hello();
+
+#endif //CONTROLLER_LIBRARY_H
