@@ -1,13 +1,13 @@
 //
 // Created by 22627 on 2023/5/1.
 //
-
+/*基础命名规则 自定义用驼峰 类内小写_ */
 #ifndef CONTROLLER_PIDCONTROLLER_H
 #define CONTROLLER_PIDCONTROLLER_H
 
 #include "Common.h"
 
-namespace TraditionalController {
+namespace PIDController {
 
 #define USESEGMENTPID 1 //是否使用分段pid控制器 如果使用则需要包含以下库
 
@@ -33,7 +33,7 @@ namespace TraditionalController {
     };
 
     struct OutPut_t {
-        fp32 out;
+        fp32 Out;
         fp32 Pout;
         fp32 Iout;
         fp32 Dout;
@@ -43,7 +43,7 @@ namespace TraditionalController {
 
     struct InPut_t {
         fp32 Set;//设定值
-        fp32 ref;//参考值
+        fp32 Ref;//参考值
     };
 
     struct AdvancedFactors_t {
@@ -59,18 +59,23 @@ namespace TraditionalController {
 
     class BasePidController {
     public:
-        Basefactors_t factors;
-        OutPut_t outPut;
-        InPut_t inPut;
+        BasePidController();
+    protected:
+        Basefactors_t factors_;
+        OutPut_t output_;
+        InPut_t input_;
     };
 
     class SimplePidController : public BasePidController {
     public:
-        SimplePidController(Basefactors_t bfs);
+        SimplePidController(Basefactors_t &bfs);
+        SimplePidController();
 
         ~SimplePidController();
 
-        fp32 PidCalc(fp32 Set, fp32 ref);
+        fp32 PidCalcPosition(fp32 Set, fp32 Ref);
+        fp32 PidCalcDelta(fp32 Set, fp32 Ref);
+        void PidInit(Basefactors_t &bfs);
 
         void PidKeeper();
 

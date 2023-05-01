@@ -13,6 +13,29 @@
 #define radians(deg) ((deg)*DEG_TO_RAD)
 #define degrees(rad) ((rad)*RAD_TO_DEG)
 #define sq(x)        ((x)*(x))
+#define LimitMax(input, max)   \
+    {                          \
+        if (input > max)       \
+        {                      \
+            input = max;       \
+        }                      \
+        else if (input < -max) \
+        {                      \
+            input = -max;      \
+        }                      \
+    }
+
+#define LimitBand(input, max, min)   \
+    {                                \
+        if (input > max)             \
+        {                            \
+            input = max;             \
+        }                            \
+        else if (input < min)        \
+        {                            \
+            input = min;             \
+        }                            \
+    }
 
 typedef float fp32;
 typedef signed char int8_t;
