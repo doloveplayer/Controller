@@ -1,24 +1,16 @@
 //
 // Created by 22627 on 2023/5/1.
 //
+
 #include "Inc/PidController.h"
 
-namespace PIDController {
-
-    SimplePidController::SimplePidController(Basefactors_t &bfs) {
-        this->factors_ = bfs;
-    }
-
-    SimplePidController::SimplePidController() {
-        //未传参数 使用默认的参数
-        this->factors_ = {0, 0, 0, 0, 0, 0, 0};
-    }
+namespace PidController {
 
     void SimplePidController::PidInit(Basefactors_t &bfs) {
         this->factors_ = bfs;
     }
 
-    fp32 SimplePidController::PidCalcPosition(fp32 Set, fp32 Ref) {
+    fp32 SimplePidController::PidCalcPosition(fp32 &Set, fp32 &Ref) {
         this->output_.error[2] = this->output_.error[1];
         this->output_.error[1] = this->output_.error[0];
         this->input_.Set = Set;
@@ -46,7 +38,7 @@ namespace PIDController {
         return this->output_.Out;
     }
 
-    fp32 SimplePidController::PidCalcDelta(fp32 Set, fp32 Ref) {
+    fp32 SimplePidController::PidCalcDelta(fp32 &Set, fp32 &Ref) {
         this->output_.error[2] = this->output_.error[1];
         this->output_.error[1] = this->output_.error[0];
         this->input_.Set = Set;
@@ -73,4 +65,32 @@ namespace PIDController {
 
         return this->output_.Out;
     }
+
+    fp32 SimplePidController::PidCalc(fp32 Set, fp32 Ref)
+    {
+        switch (this->pidmode_) {
+
+            case PID_POSITION:
+                PidCalcPosition(Set, Ref);
+            case PID_DELTA:
+                PidCalcDelta(Set, Ref);
+            default:
+                return 0;
+        }
+        return 0;
+    }
+    fp32 SegmentPidController::PidSegmentCalc(fp32 Set, fp32 Ref) {
+        int index = 0;
+        for (; index < this->NumSegments_; index++) {
+            if (!INRANGE(Set, this->segments_[index].DownSegment, this->segments_[index].UpSegment)) {
+                SimplePidController::PidInit(this->factors_[index]);//切换pid参数而不改变输入输出量
+                SimplePidController::PidCalc(Set, Ref);
+            };
+        }
+        return 0;
+    }
 }
+
+
+
+

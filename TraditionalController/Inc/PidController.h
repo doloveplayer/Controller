@@ -5,19 +5,18 @@
 #ifndef CONTROLLER_PIDCONTROLLER_H
 #define CONTROLLER_PIDCONTROLLER_H
 
+namespace PidController {
+
 #include "Common.h"
 
-namespace PIDController {
-
-#define USESEGMENTPID 1 //是否使用分段pid控制器 如果使用则需要包含以下库
-
-#if USESEGMENTPID
-
-#include <tuple>
+#include <iostream>
 #include <vector>
 
-#else
-#endif
+    enum PidMode_e {
+        PID_POSITION = 0,//位置式PID
+        PID_DELTA//增量试
+    };
+
 
     struct Basefactors_t {
         //PID 三参数
@@ -57,76 +56,68 @@ namespace PIDController {
         /*变速积分*/
     };
 
-    class BasePidController {
+    class SimplePidController {
     public:
-        BasePidController();
-    protected:
-        Basefactors_t factors_;
-        OutPut_t output_;
-        InPut_t input_;
-    };
 
-    class SimplePidController : public BasePidController {
-    public:
-        SimplePidController(Basefactors_t &bfs);
-        SimplePidController();
+        SimplePidController(Basefactors_t &bfs, PidMode_e pidmode) {
+            this->factors_ = bfs;
+            this->pidmode_ = pidmode;
+        }
 
-        ~SimplePidController();
+        SimplePidController(PidMode_e pidmode) {
+            //未传参数 使用默认的参数
+            this->factors_ = {0, 0, 0, 0, 0, 0, 0};
+            this->pidmode_ = pidmode;
+        }
 
-        fp32 PidCalcPosition(fp32 Set, fp32 Ref);
-        fp32 PidCalcDelta(fp32 Set, fp32 Ref);
+        SimplePidController() {};
+
         void PidInit(Basefactors_t &bfs);
+
+        fp32 PidCalc(fp32 Set, fp32 Ref);
 
         void PidKeeper();
 
         void PidClear();
+
+    protected:
+        fp32 PidCalcPosition(fp32 &Set, fp32 &Ref);
+
+        fp32 PidCalcDelta(fp32 &Set, fp32 &Ref);
+
+        Basefactors_t factors_;//基本控制参数
+        AdvancedFactors_t Advfactors_;//高级控制参数
+        OutPut_t output_;//输出的参数
+        InPut_t input_;//输入变量
+        PidMode_e pidmode_;//模式
     };
 
-#if USESEGMENTPID
-
-    class SegmentPidController : public BasePidController {
+    class SegmentPidController : public SimplePidController {
     public:
-
-        struct Segment_t//分段的区间
-        {
-            float UpSegment;
-            float DownSegment;
-        };
-
-        // 可变参数模板实现
-        template<typename... Args>
-        SegmentPidController(Args... segments, Args... factors) {
-            // 将可变参数保存到vector中
-            factors_ = {factors...};
-            segments_ = {segments...};
-            // 分段数量即为参数数量除以segment
-            NumSegments_ = sizeof...(segments) / sizeof(Segment_t);
-            if(NumSegments_ != sizeof...(factors) / sizeof(Basefactors_t))
-            {
-                //错误处理函数
+        SegmentPidController(size_t numsegment, PidMode_e pidmode) {
+            this->NumSegments_ = numsegment;
+            for (int i = 0; i < numsegment; i++) {
+                this->factors_[i] = default_factors_;
+                this->segments_[i] = default_limits_;
             }
-            else
-            {
-                //正常
-            }
+            SimplePidController::pidmode_ = pidmode;//模式选择
         }
 
+        size_t NumSegments_;  // 分段数量
+        Basefactors_t default_factors_ = {1.0, 0.0, 0.0, 1000, 1000, 1000, 1000};  // 默认的PID参数
+        Segment_t default_limits_ = {0, 0};  // 默认的分段上下限
         std::vector<Basefactors_t> factors_;  // 每一段对应的PID参数
         std::vector<Segment_t> segments_;  // 每一段的区间
-        int NumSegments_;  // 分段数量
-        Basefactors_t default_params_ = {1.0, 0.0, 0.0, 1000, 1000, 1000, 1000};  // 默认的PID参数
 
+        fp32 PidSegmentCalc(fp32 Set, fp32 Ref);//分段计算
     };
 
-#else
-#endif
 
-
-    class FuzzyPidController : public BasePidController {
+    class FuzzyPidController : public SimplePidController {
     public:
     };
 }
 
-#endif //CONTROLLER_PIDCONTROLLER_H
+#endif //CONTROLLER_PidCONTROLLER_H
 
 

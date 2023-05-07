@@ -3,7 +3,7 @@
 //
 #include "Common.h"
 
-template<typename T>
+template <typename T>
 T linear_map(T value, T in_min, T in_max, T out_min, T out_max) {
     T out_value = (value - in_min) / (in_max - in_min) * (out_max - out_min) + out_min;
     if (out_min < out_max) {

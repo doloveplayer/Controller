@@ -1,18 +1,15 @@
 //
 // Created by 22627 on 2023/5/1.
 //
+#include "stdio.h"
+//#include "math.h"
 
-#ifndef CONTROLLER_COMMON_H
-#define CONTROLLER_COMMON_H
+#ifndef COMMON_H
+#define COMMON_H
 
-#define min(a, b) ((a)<(b)?(a):(b))
-#define max(a, b) ((a)>(b)?(a):(b))
-#define ABS(x)  (((x)>0)?(x):-(x))//abs(x) is define in stdlib.h
+#define ABS(x)  (((x)>0)?(x):-(x))
 #define constrain(amt, low, high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
-#define round(x)     ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
-#define radians(deg) ((deg)*DEG_TO_RAD)
-#define degrees(rad) ((rad)*RAD_TO_DEG)
-#define sq(x)        ((x)*(x))
+#define INRANGE(value, min, max) ((value) >= (min) && (value) <= (max) ? 1 : 0)
 #define LimitMax(input, max)   \
     {                          \
         if (input > max)       \
@@ -45,6 +42,13 @@ typedef unsigned char uint8_t;
 typedef unsigned short int uint16_t;
 typedef unsigned int uint32_t;
 
+
+struct Segment_t//分段的区间
+{
+    float UpSegment;
+    float DownSegment;
+};
+
 /**
   * @brief          线性映射函数
   * @param[in]      &value 要映射的值
@@ -55,7 +59,7 @@ typedef unsigned int uint32_t;
   * @retval         none
   */
 template<typename T>
-T linear_map(T value, T in_min, T in_max, T out_min, T out_max)
+T linear_map(T value, T in_min, T in_max, T out_min, T out_max);
 
 
-#endif //CONTROLLER_COMMON_H
+#endif //COMMON_H

@@ -1,3 +1,4 @@
 D:/SELF_project/Controller/cmake-build-debug/CMakeFiles/Controller.dir
+D:/SELF_project/Controller/cmake-build-debug/CMakeFiles/Test.dir
 D:/SELF_project/Controller/cmake-build-debug/CMakeFiles/edit_cache.dir
 D:/SELF_project/Controller/cmake-build-debug/CMakeFiles/rebuild_cache.dir
