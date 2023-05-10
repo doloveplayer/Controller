@@ -15,11 +15,14 @@ namespace PidController {
         this->output_.error[1] = this->output_.error[0];
         this->input_.Set = Set;
         this->input_.Ref = Ref;
+        printf("set: %f,ref: %f\r\n", this->input_.Set, this->input_.Ref = Ref);
 
         //更新当前误差
         this->output_.error[0] = this->input_.Set - this->input_.Ref;
+        printf("error:%f\r\n", this->output_.error[0]);
         if (ABS(this->output_.error[0]) < this->factors_.DeadBand) {
-            return 0;
+            printf("dead error:%f\r\n", this->output_.error[0]);
+            return this->output_.Out;
         }
         //计算p
         this->output_.Pout = this->factors_.Kp * this->output_.error[0];
@@ -33,7 +36,6 @@ namespace PidController {
         this->output_.Dout = this->factors_.Kd * this->output_.Dbuf[0];
 
         this->output_.Out = this->output_.Pout + this->output_.Iout + this->output_.Dout;
-        LimitMax(this->output_.Out, this->factors_.MaxOut);
 
         return this->output_.Out;
     }
@@ -66,19 +68,25 @@ namespace PidController {
         return this->output_.Out;
     }
 
-    fp32 SimplePidController::PidCalc(fp32 Set, fp32 Ref)
-    {
+    fp32 SimplePidController::PidCalc(fp32 Set, fp32 Ref) {
         switch (this->pidmode_) {
-
             case PID_POSITION:
+            {
                 PidCalcPosition(Set, Ref);
+                break;
+            }
             case PID_DELTA:
+            {
                 PidCalcDelta(Set, Ref);
+                break;
+            }
             default:
+            {
                 return 0;
+            }
         }
-        return 0;
     }
+
     fp32 SegmentPidController::PidSegmentCalc(fp32 Set, fp32 Ref) {
         int index = 0;
         for (; index < this->NumSegments_; index++) {

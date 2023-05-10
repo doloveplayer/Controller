@@ -5,12 +5,12 @@
 #ifndef CONTROLLER_PIDCONTROLLER_H
 #define CONTROLLER_PIDCONTROLLER_H
 
-namespace PidController {
 
 #include "Common.h"
 
-#include <iostream>
 #include <vector>
+
+namespace PidController {
 
     enum PidMode_e {
         PID_POSITION = 0,//位置式PID
@@ -80,7 +80,6 @@ namespace PidController {
 
         void PidClear();
 
-    protected:
         fp32 PidCalcPosition(fp32 &Set, fp32 &Ref);
 
         fp32 PidCalcDelta(fp32 &Set, fp32 &Ref);
@@ -94,16 +93,16 @@ namespace PidController {
 
     class SegmentPidController : public SimplePidController {
     public:
-        SegmentPidController(size_t numsegment, PidMode_e pidmode) {
+        SegmentPidController(uint8_t numsegment, PidMode_e pidmode) {
             this->NumSegments_ = numsegment;
-            for (int i = 0; i < numsegment; i++) {
+            for (uint8_t i = 0; i < numsegment; i++) {
                 this->factors_[i] = default_factors_;
                 this->segments_[i] = default_limits_;
             }
             SimplePidController::pidmode_ = pidmode;//模式选择
         }
 
-        size_t NumSegments_;  // 分段数量
+        uint8_t NumSegments_;  // 分段数量
         Basefactors_t default_factors_ = {1.0, 0.0, 0.0, 1000, 1000, 1000, 1000};  // 默认的PID参数
         Segment_t default_limits_ = {0, 0};  // 默认的分段上下限
         std::vector<Basefactors_t> factors_;  // 每一段对应的PID参数
