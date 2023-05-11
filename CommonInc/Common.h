@@ -10,7 +10,7 @@
 #define ABS(x)  (((x)>0)?(x):-(x))
 #define constrain(amt, low, high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
 #define INRANGE(value, min, max) ((value) >= (min) && (value) <= (max) ? 1 : 0)
-#define LimitMax(input, max)   \
+#define LIMITMAX(input, max)   \
     {                          \
         if (input > max)       \
         {                      \
@@ -22,7 +22,7 @@
         }                      \
     }
 
-#define LimitBand(input, max, min)   \
+#define LIMITBAND(input, max, min)   \
     {                                \
         if (input > max)             \
         {                            \
@@ -41,13 +41,6 @@ typedef signed int int32_t;
 typedef unsigned char uint8_t;
 typedef unsigned short int uint16_t;
 typedef unsigned int uint32_t;
-
-
-struct Segment_t//分段的区间
-{
-    float UpSegment;
-    float DownSegment;
-};
 
 /**
   * @brief          线性映射函数

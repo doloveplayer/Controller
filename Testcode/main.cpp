@@ -6,22 +6,23 @@
 #include "Inc/PidController.h"
 
 int main() {
-    PidController::Basefactors_t pid = {0.5, 0.05, 0, 30, 40, 80, 1};
+    PidController::Basefactors_t pid1 = {0.3, 0.5, 0, 30, 200, 80, 1};
+    PidController::Basefactors_t pid2 = {0.2, 0.2, 0, 30, 200, 80, 1};
+    PidController::Basefactors_t pid3 = {0.1, 0.1, 0, 30, 200, 80, 1};
+    std::vector<PidController::Basefactors_t> pid={pid1,pid2,pid3};
+    std::vector<PidController::Segment_t> seg={{2000,20},{20,5},{5,-2000}};
     PidController::PidMode_e pe = PidController::PID_POSITION;
-    PidController::SimplePidController spid(pid, pe);
+    PidController::SegmentPidController spid(3,pe);
+    spid.PidInit(pid,seg);
 
     float aim=100;
     float ref=30;
-    printf("p: %f,i: %f,d:%f\r\n",spid.factors_.Kp,spid.factors_.Ki,spid.factors_.Kd);
-    printf("mode:%d Maxout:%f,MaxIout:%f\r\n",spid.pidmode_,spid.factors_.MaxOut,spid.factors_.MaxIout);
 
-    for(int i=0;i<10;i++)
+    for(int i=0;i<20;i++)
     {
-        ref = spid.PidCalc(aim,ref);
-        printf("calc out :%f\r\n",spid.PidCalc(aim,ref));
+        ref = spid.PidSegmentCalc(aim,ref);
         printf("ref:%f\r\n",ref);
         Sleep(500);
-//        printf("set: %f,ref: %f\r\n",aim,ref);
     }
 
     printf("good!");

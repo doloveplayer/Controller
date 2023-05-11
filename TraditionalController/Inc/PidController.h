@@ -17,7 +17,6 @@ namespace PidController {
         PID_DELTA//增量试
     };
 
-
     struct Basefactors_t {
         //PID 三参数
         fp32 Kp;
@@ -56,16 +55,18 @@ namespace PidController {
         /*变速积分*/
     };
 
+    struct Segment_t//分段的区间
+    {
+        float UpSegment;
+        float DownSegment;
+    };
+
     class SimplePidController {
     public:
-
-        SimplePidController(Basefactors_t &bfs, PidMode_e pidmode) {
-            this->factors_ = bfs;
-            this->pidmode_ = pidmode;
-        }
-
         SimplePidController(PidMode_e pidmode) {
-            //未传参数 使用默认的参数
+            //未调用初始化函数 使用默认的参数
+            this->output_.error[2] = this->output_.error[1] = this->output_.error[0] = 0;
+            this->input_.Ref = this->input_.Set = 0;
             this->factors_ = {0, 0, 0, 0, 0, 0, 0};
             this->pidmode_ = pidmode;
         }
@@ -73,6 +74,7 @@ namespace PidController {
         SimplePidController() {};
 
         void PidInit(Basefactors_t &bfs);
+        void PidSwitch(Basefactors_t &bfs);
 
         fp32 PidCalc(fp32 Set, fp32 Ref);
 
@@ -94,21 +96,26 @@ namespace PidController {
     class SegmentPidController : public SimplePidController {
     public:
         SegmentPidController(uint8_t numsegment, PidMode_e pidmode) {
-            this->NumSegments_ = numsegment;
+            this->Num_segments_ = numsegment;
+            this->limits_.resize(numsegment);
+            this->factors_.resize(numsegment);
             for (uint8_t i = 0; i < numsegment; i++) {
                 this->factors_[i] = default_factors_;
-                this->segments_[i] = default_limits_;
+                this->limits_[i] = default_limits_;
             }
             SimplePidController::pidmode_ = pidmode;//模式选择
         }
 
-        uint8_t NumSegments_;  // 分段数量
+        fp32 PidSegmentCalc(fp32 Set, fp32 Ref);//分段计算
+
+        void PidInit(std::vector<Basefactors_t> &bfs, std::vector<Segment_t> &seg_);
+
+
+        uint8_t Num_segments_;  // 分段数量
         Basefactors_t default_factors_ = {1.0, 0.0, 0.0, 1000, 1000, 1000, 1000};  // 默认的PID参数
         Segment_t default_limits_ = {0, 0};  // 默认的分段上下限
         std::vector<Basefactors_t> factors_;  // 每一段对应的PID参数
-        std::vector<Segment_t> segments_;  // 每一段的区间
-
-        fp32 PidSegmentCalc(fp32 Set, fp32 Ref);//分段计算
+        std::vector<Segment_t> limits_;  // 每一段的区间
     };
 
 
