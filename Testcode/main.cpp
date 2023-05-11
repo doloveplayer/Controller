@@ -6,10 +6,10 @@
 #include "Inc/PidController.h"
 
 int main() {
-    PidController::Basefactors_t pid1 = {0.3, 0.5, 0, 30, 200, 80, 1};
-    PidController::Basefactors_t pid2 = {0.2, 0.2, 0, 30, 200, 80, 1};
-    PidController::Basefactors_t pid3 = {0.1, 0.1, 0, 30, 200, 80, 1};
-    std::vector<PidController::Basefactors_t> pid={pid1,pid2,pid3};
+    PidController::BaseFactors_t pid1 = {0.3, 0.5, 0, 30, 200, 80, 1};
+    PidController::BaseFactors_t pid2 = {0.2, 0.2, 0, 30, 200, 80, 1};
+    PidController::BaseFactors_t pid3 = {0.1, 0.1, 0, 30, 200, 80, 1};
+    std::vector<PidController::BaseFactors_t> pid={pid1,pid2,pid3};
     std::vector<PidController::Segment_t> seg={{2000,20},{20,5},{5,-2000}};
     PidController::PidMode_e pe = PidController::PID_POSITION;
     PidController::SegmentPidController spid(3,pe);
