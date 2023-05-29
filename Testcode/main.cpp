@@ -18,6 +18,7 @@ int main() {
     spid.PidInit(pid,seg);
     std::vector<fp32> out = {20,10,5};
     spid.advanced_factors_.SegmentForwardFeedInit(seg,out);
+    spid.advanced_factors_.trapezium_integral_.flag =1;
 
     float aim=100;
     float ref=30;
