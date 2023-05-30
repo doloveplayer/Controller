@@ -29,6 +29,8 @@ namespace TraditionalController {
     };
 
     struct OutPut_t {
+        OutPut_t() :error{0.0,0.0,0.0},d_buf{0.0,0.0,0.0}{}
+
         fp32 out;
         fp32 p_out;
         fp32 i_out;

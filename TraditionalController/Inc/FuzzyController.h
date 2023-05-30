@@ -74,6 +74,23 @@ namespace TraditionalController {
 
     class FuzzyPidController : public SimplePidController {
     public:
+        FuzzyPidController( PidMode_e _pid_mode) {
+            this->pid_mode_ = _pid_mode;
+#if MEMBERSHIPFUNCTION == triangular
+            //三角隶属度函数必定对应论域中两个元素
+            e_index.resize(2);
+            er_index.resize(2);
+#elif MEMBERSHIPFUNCTION == trapezoidal
+            //梯形隶属度函数必定对应论域中两个元素
+            e_index.resize(2);
+            er_index.resize(2);
+#elif MEMBERSHIPFUNCTION==gaussian
+            //高斯隶属度函数必定对应论域中四个元素
+            e_index.resize(4);
+            er_index.resize(4);
+#endif
+        }
+
         void FuzzyPIDController(fp32 _e, fp32 _er);
 
         void FuzzyPIDCalc(fp32 _set, fp32 _ref);
@@ -81,10 +98,18 @@ namespace TraditionalController {
         fp32 delat_kp_;
         fp32 delat_ki_;
         fp32 delat_kd_;
+
+        BaseFactors_t fuzzy_factors;
+
+        fp32 e_[2];
+        fp32 er_;
         fp32 mapped_e;
         fp32 mapped_er;
-        std::vector<fp32> e_memberShip_;
+
+        std::vector<fp32> e_memberShip_;//误差的隶属度
+        std::vector<int8_t> e_index;//误差隶属度对应位置
         std::vector<fp32> er_memberShip_;
+        std::vector<int8_t> er_index;
     };
 }
 
