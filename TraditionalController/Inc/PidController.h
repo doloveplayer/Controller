@@ -6,11 +6,9 @@
 
 
 #include "Common.h"
-
 #include <vector>
-#include <map>
 
-namespace PidController {
+namespace TraditionalController {
 
     enum PidMode_e {
         PID_POSITION = 0,//位置式PID
@@ -63,18 +61,21 @@ namespace PidController {
             std::vector<fp32> out;//对应分段输出
             uint8_t segment_size;//分段数量
         };
+
         /**
          * @brief          模型前馈控制
          * @param[in]      fp32 _in: 输入
          * @retval         输出
          */
         fp32 ForwardFeed(fp32 _in);
+
         /**
          * @brief          分段前馈控制初始化
          * @param[in]      fp32 _in: 输入
          * @retval         输出
          */
-        void SegmentForwardFeedInit(std::vector<Segment_t> &_ref_seg,std::vector<fp32> &_out);
+        void SegmentForwardFeedInit(std::vector<Segment_t> &_ref_seg, std::vector<fp32> &_out);
+
         /**
          * @brief          分段前馈控制
          * @param[in]      fp32 _err: 当前参考值
@@ -92,6 +93,7 @@ namespace PidController {
             fp32 max_intergral;
             fp32 min_intergral;
         };
+
         /**
         * @brief          变速积分初始化函数
         * @param[in]      fp32 _maxInterval: 积分区间上限
@@ -99,6 +101,7 @@ namespace PidController {
         * @retval         变速积分系数
         */
         void VariableIntergralInit(fp32 _max_interval, fp32 _min_interval);
+
         /**
         * @brief          变速积分系数计算函数
         * @param[in]      fp32& _max_interval: 积分区间上限
@@ -106,7 +109,7 @@ namespace PidController {
         * @param[in]      fp32& _error: 	本次误差
         * @retval         变速积分系数
         */
-        fp32 VariableIntergralCoefficientCalc(fp32& _max_interval, fp32& _min_interval, fp32& _error);
+        fp32 VariableIntergralCoefficientCalc(fp32 &_max_interval, fp32 &_min_interval, fp32 &_error);
 
         ForwardFeed_t forward_feed_;
         TrapeziumIntegral_t trapezium_integral_;
@@ -234,11 +237,6 @@ namespace PidController {
         Segment_t default_limits_ = {0, 0};  // 默认的分段上下限
         std::vector<BaseFactors_t> factors_;  // 每一段对应的PID参数
         std::vector<Segment_t> limits_;  // 每一段的区间
-    };
-
-
-    class FuzzyPidController : public SimplePidController {
-    public:
     };
 }
 

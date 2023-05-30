@@ -1,5 +1,5 @@
 # TraditionalController
-##简单pid使用
+## 简单pid使用
 初始化&使用方法
 ```
     PidController::BaseFactors_t bf1 = {0.3, 0.5, 0, 100, 200, 80, 1};
@@ -7,7 +7,7 @@
     spid.PidInit(bf1);
     spid.PidCalc(.....);
 ```
-##分段pid使用
+## 分段pid使用
 初始化&使用方法
 ```
     PidController::BaseFactors_t bf1 = {0.3, 0.5, 0, 100, 200, 80, 1};
@@ -24,7 +24,7 @@
     spid.PidSegmentCalc(....);
 ```
 
-##其他功能
+## 其他功能
 初始化&使用方法
 ```
 //前馈控制

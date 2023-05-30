@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 include_directories(CommonInc ModernController NonlinearControl TraditionalController)
 
-add_library(Controller library.cpp TraditionalController/Inc/PidController.h TraditionalController/Src/PidController.cpp CommonInc/Common.h CommonInc/Common.cpp)
+add_library(Controller library.cpp TraditionalController/Inc/PidController.h TraditionalController/Src/PidController.cpp CommonInc/Common.h CommonInc/Common.cpp TraditionalController/Inc/FuzzyController.h TraditionalController/Src/FuzzyController.cpp)
 
 add_executable(Test Testcode/main.cpp)
 target_link_libraries(Test Controller)

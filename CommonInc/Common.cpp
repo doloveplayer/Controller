@@ -4,21 +4,21 @@
 #include "Common.h"
 
 template <typename T>
-T linear_map(T _value, T _in_min, T _in_max, T _out_min, T _out_max) {
-    T out_value = (_value - _in_min) / (_in_max - _in_min) * (_out_max - _out_min) + _out_min;
-    if (_out_min < _out_max) {
-        if (out_value < _out_min) {
-            out_value = _out_min;
+T LinearMap(T value, T in_min, T in_max, T out_min, T out_max) {
+    T out_value = (value - in_min) / (in_max - in_min) * (out_max - out_min) + out_min;
+    if (out_min < out_max) {
+        if (out_value < out_min) {
+            out_value = out_min;
         }
-        if (out_value > _out_max) {
-            out_value = _out_max;
+        if (out_value > out_max) {
+            out_value = out_max;
         }
     } else {
-        if (out_value > _out_min) {
-            out_value = _out_min;
+        if (out_value > out_min) {
+            out_value = out_min;
         }
-        if (out_value < _out_max) {
-            out_value = _out_max;
+        if (out_value < out_max) {
+            out_value = out_max;
         }
     }
     return out_value;

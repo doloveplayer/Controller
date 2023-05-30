@@ -70,6 +70,13 @@ build CMakeFiles/Controller.dir/CommonInc/Common.cpp.obj: CXX_COMPILER__Controll
   OBJECT_DIR = CMakeFiles\Controller.dir
   OBJECT_FILE_DIR = CMakeFiles\Controller.dir\CommonInc
 
+build CMakeFiles/Controller.dir/TraditionalController/Src/FuzzyController.cpp.obj: CXX_COMPILER__Controller_Debug D$:/SELF_project/Controller/TraditionalController/Src/FuzzyController.cpp || cmake_object_order_depends_target_Controller
+  DEP_FILE = CMakeFiles\Controller.dir\TraditionalController\Src\FuzzyController.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++11
+  INCLUDES = -ID:/SELF_project/Controller/CommonInc -ID:/SELF_project/Controller/ModernController -ID:/SELF_project/Controller/NonlinearControl -ID:/SELF_project/Controller/TraditionalController
+  OBJECT_DIR = CMakeFiles\Controller.dir
+  OBJECT_FILE_DIR = CMakeFiles\Controller.dir\TraditionalController\Src
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target Controller
@@ -78,7 +85,7 @@ build CMakeFiles/Controller.dir/CommonInc/Common.cpp.obj: CXX_COMPILER__Controll
 #############################################
 # Link the static library libController.a
 
-build libController.a: CXX_STATIC_LIBRARY_LINKER__Controller_Debug CMakeFiles/Controller.dir/library.cpp.obj CMakeFiles/Controller.dir/TraditionalController/Src/PidController.cpp.obj CMakeFiles/Controller.dir/CommonInc/Common.cpp.obj
+build libController.a: CXX_STATIC_LIBRARY_LINKER__Controller_Debug CMakeFiles/Controller.dir/library.cpp.obj CMakeFiles/Controller.dir/TraditionalController/Src/PidController.cpp.obj CMakeFiles/Controller.dir/CommonInc/Common.cpp.obj CMakeFiles/Controller.dir/TraditionalController/Src/FuzzyController.cpp.obj
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles\Controller.dir
   POST_BUILD = cd .

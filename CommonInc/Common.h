@@ -52,7 +52,7 @@ typedef unsigned int uint32_t;
   * @retval         none
   */
 template<typename T>
-T linear_map(T value, T in_min, T in_max, T out_min, T out_max);
+T LinearMap(T value, T in_min, T in_max, T out_min, T out_max);
 
 
 #endif //COMMON_H
