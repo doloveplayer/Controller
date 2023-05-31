@@ -45,44 +45,55 @@ namespace TraditionalController {
 
 
     void FuzzyPidController::FuzzyPIDController(fp32 _e, fp32 _er) {
-
+        uint8_t domain_size = (uint8_t) sizeof(Domain);
+        /*******对输入变量限幅*******/
         LIMITBAND(_e, this->fuzzy_factor_range_.e_range_.up_segment, this->fuzzy_factor_range_.e_range_.down_segment);
         LIMITBAND(_er, this->fuzzy_factor_range_.er_range_.up_segment,
                   this->fuzzy_factor_range_.er_range_.down_segment);
-
+        /*******映射到论域*******/
         this->mapped_e = LinearMap(_e, this->fuzzy_factor_range_.e_range_.down_segment,
                                    this->fuzzy_factor_range_.e_range_.up_segment, NB, PB);
         this->mapped_er = LinearMap(_er, this->fuzzy_factor_range_.er_range_.down_segment,
                                     this->fuzzy_factor_range_.er_range_.up_segment, NB, PB);
-
-        /*******计算误差的隶属度*******/
+        /*******计算隶属度*******/
 #if MEMBERSHIPFUNCTION == triangular
         //计算误差的隶属度
-        for (uint8_t index = 0; index <= 5; index++) {
-            if (INRANGE(this->mapped_e, Domain[index], Domain[index + 1]))//判断误差所在区间
-            {
-                if (index != 0 && index != 5) {
-                    this->e_memberShip_[0] = triangularMembership(this->mapped_e, Domain[index - 1], Domain[index],
-                                                                  Domain[index + 1]);
-                    this->e_memberShip_[1] = triangularMembership(this->mapped_e, Domain[index], Domain[index + 1],
-                                                                  Domain[index + 2]);
-                    e_index_[0] = index;
-                    e_index_[1] = index + 1;
-                    break;
-                } else if (index == 0) {
-                    this->e_memberShip_[0] = triangularMembership(this->mapped_e, -4, -3, -2);
-                    this->e_memberShip_[1] = triangularMembership(this->mapped_e, Domain[index], Domain[index + 1],
-                                                                  Domain[index + 2]);
-                    e_index_[0] = 0;
-                    e_index_[1] = 1;
-                    break;
-                } else if (index == 5) {
-                    this->e_memberShip_[0] = triangularMembership(this->mapped_e, Domain[index - 1], Domain[index],
-                                                                  Domain[index + 1]);
-                    this->e_memberShip_[1] = triangularMembership(this->mapped_e, 2, 3, 4);
-                    e_index_[0] = 5;
-                    e_index_[1] = 6;
-                    break;
+        for (uint8_t i = 0; i <= domain_size; i++) {
+            if (this->mapped_e > Domain[0] && this->mapped_e < Domain[domain_size - 1]) {
+                for (uint8_t j = 0; j <= domain_size; j++) {
+                    this->e_membership_index_.insert(std::make_pair(j, triangularMembership(this->mapped_e,
+                                                                                            Domain[j] - MEMBERSHIP_STEP,
+                                                                                            Domain[j],
+                                                                                            Domain[j] +
+                                                                                            MEMBERSHIP_STEP)));
+                    if (this->e_membership_index_[j] == 0) {//如果隶属度为零 说明已经不在能包括他的论域了
+                        this->e_membership_index_.erase(j);
+                        break;
+                    }
+                }
+            } else {
+                if (this->mapped_e <= Domain[0]) {
+                    this->e_membership_index_.insert(std::make_pair(0, 1));
+                    for (uint8_t j = 1; j <= domain_size; j++) {
+                        this->e_membership_index_.insert(std::make_pair(j, triangularMembership(this->mapped_e,
+                                                                                                Domain[j] - MEMBERSHIP_STEP,
+                                                                                                Domain[j],
+                                                                                                Domain[j] +
+                                                                                                MEMBERSHIP_STEP)));
+                        if (this->e_membership_index_[j] == 0) {//如果隶属度为零 说明已经不在能包括他的论域了
+                            this->e_membership_index_.erase(j);
+                            break;
+                        }
+                    }
+                } else if (this->mapped_e >= Domain[sizeof(Domain) - 1]) {
+                    this->e_membership_index_.insert(std::make_pair(domain_size-1, 1));
+                    for (uint8_t j = 0; j >= domain_size-1; j++) {
+                        this->e_membership_index_.insert(std::make_pair(j, triangularMembership(this->mapped_e,
+                                                                                                Domain[j] - MEMBERSHIP_STEP,
+                                                                                                Domain[j],
+                                                                                                Domain[j] +
+                                                                                                MEMBERSHIP_STEP)));
+                    }
                 }
             }
         }
@@ -115,11 +126,12 @@ namespace TraditionalController {
                 }
             }
         }
-        printf("this error:%f\r\n",this->e_[0]);
+
+        printf("this error:%f\r\n", this->e_[0]);
         printf("the error1 is %f,the error2  is %f\r\n", Domain[e_index_[0]], Domain[e_index_[1]]);
         printf("the error1 membership is %f,the error2 membership is %f\r\n", this->e_memberShip_[0],
                this->e_memberShip_[1]);
-        printf("this Rerror:%f\r\n",this->er_);
+        printf("this Rerror:%f\r\n", this->er_);
         printf("the Rerror1 is %f,the Rerror2  is %f\r\n", Domain[er_index_[0]], Domain[er_index_[1]]);
         printf("the Rerror1 membership is %f,the Rerror2 membership is %f\r\n", this->er_memberShip_[0],
                this->er_memberShip_[1]);

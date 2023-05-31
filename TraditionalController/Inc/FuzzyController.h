@@ -7,12 +7,14 @@
 
 #include "Common.h"
 #include <vector>
+#include <map>
 #include "math.h"
 
 #include "Inc/PidController.h"
 
 namespace TraditionalController {
     /*********隶属度函数的选择*********/
+#define MEMBERSHIP_STEP 1.0f //隶属度步长 步长越大稳定性越好 越吃算力 越小就反之 不能小于 0.5
 #define triangular 0//三角
 #define trapezoidal 1//梯形
 #define gaussian 2//高斯
@@ -83,16 +85,16 @@ namespace TraditionalController {
     class FuzzyPidController : public SimplePidController {
     public:
         FuzzyPidController(PidMode_e _pid_mode) : SimplePidController(_pid_mode), e_{0.0, 0.0}, er_(0.0), mapped_e(0.0),
-                                                  mapped_er(0.0),delat_kp_(0.0),delat_kd_(0.0),delat_ki_(0.0) {
+                                                  mapped_er(0.0),delat_kp_(0.0),delat_kd_(0.0),delat_ki_(0.0), pid_mapping_factor_(1){
             this->fuzzy_factor_range_.e_range_ = {InEMax, InEMin};
             this->fuzzy_factor_range_.er_range_ = {InERMax, InERMin};
 
 #if MEMBERSHIPFUNCTION == triangular
             //三角隶属度函数必定对应论域中两个元素
-            this->e_index_.resize(2, 0);
-            this->e_memberShip_.resize(2, 0.0);
-            this->er_index_.resize(2, 0);
-            this->er_memberShip_.resize(2, 0.0);
+//            this->e_index_.resize(2, 0);
+//            this->e_memberShip_.resize(2, 0.0);
+//            this->er_index_.resize(2, 0);
+//            this->er_memberShip_.resize(2, 0.0);
 #elif MEMBERSHIPFUNCTION == trapezoidal
             //梯形隶属度函数必定对应论域中两个元素
             e_index.resize(2);
@@ -121,6 +123,8 @@ namespace TraditionalController {
         fp32 delat_ki_;
         fp32 delat_kd_;
 
+        fp32 pid_mapping_factor_;
+
         FuzzyFactorRange_t fuzzy_factor_range_;
 
         fp32 e_[2];//误差
@@ -128,8 +132,10 @@ namespace TraditionalController {
         fp32 mapped_e;//映射到论域的误差
         fp32 mapped_er;//映射到论域的误差变化率
 
+        std::map<int8_t,fp32> e_membership_index_;
         std::vector<fp32> e_memberShip_;//误差的隶属度
         std::vector<int8_t> e_index_;//误差隶属度对应位置
+        std::map<int8_t,std::vector<fp32>> er_membership_index_;
         std::vector<fp32> er_memberShip_;
         std::vector<int8_t> er_index_;
     };
