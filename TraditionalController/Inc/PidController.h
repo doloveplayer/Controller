@@ -29,8 +29,7 @@ namespace TraditionalController {
     };
 
     struct OutPut_t {
-        OutPut_t() :error{0.0,0.0,0.0},d_buf{0.0,0.0,0.0}{}
-
+        OutPut_t() : error{0.0, 0.0, 0.0}, d_buf{0.0, 0.0, 0.0}, out(0.0),p_out(0.0),i_out(0.0),d_out(0.0) {}
         fp32 out;
         fp32 p_out;
         fp32 i_out;
@@ -40,14 +39,15 @@ namespace TraditionalController {
     };
 
     struct InPut_t {
+        InPut_t():set(0.0),ref(0.0){}
         fp32 set;//设定值
         fp32 ref;//参考值
     };
 
     struct Segment_t//分段的区间
     {
-        float up_segment;
-        float down_segment;
+        fp32 up_segment;
+        fp32 down_segment;
     };
 
     class AdvancedFactors {
@@ -55,7 +55,7 @@ namespace TraditionalController {
         /*前馈控制*/
         struct ForwardFeed_t {
             uint8_t flag;
-            /*电机模型的前馈控制 参照华南虎*/
+            /*电机模型的前馈控制 参照华南小分队*/
             fp32 last_in;//上一次的输入
             fp32 time;//采样周期（s）
             /*分段模型的前馈控制 暴力使用*/
@@ -126,10 +126,6 @@ namespace TraditionalController {
          * @retval         none
          */
         SimplePidController(PidMode_e _pid_mode) {
-            //未调用初始化函数 使用默认的参数
-            this->output_.error[2] = this->output_.error[1] = this->output_.error[0] = 0;
-            this->input_.ref = this->input_.set = 0;
-            this->factors_ = {0, 0, 0, 0, 0, 0, 0};
             this->pid_mode_ = _pid_mode;
 
             this->advanced_factors_.forward_feed_.flag = 0;
@@ -231,12 +227,12 @@ namespace TraditionalController {
          * @param[in]      std::vector<Segment_t> &seg_: PID分段区间
          * @retval         none
          */
-        void PidInit(std::vector<BaseFactors_t> &bfs, std::vector<Segment_t> &seg_);
+        void PidInit(std::vector<BaseFactors_t> &_bfs, std::vector<Segment_t> &_seg);
 
     protected:
         uint8_t num_segments_;  // 分段数量
-        BaseFactors_t default_factors_ = {1.0, 0.0, 0.0, 1000, 1000, 1000, 1000};  // 默认的PID参数
-        Segment_t default_limits_ = {0, 0};  // 默认的分段上下限
+        BaseFactors_t default_factors_;  // 默认的PID参数
+        Segment_t default_limits_;  // 默认的分段上下限
         std::vector<BaseFactors_t> factors_;  // 每一段对应的PID参数
         std::vector<Segment_t> limits_;  // 每一段的区间
     };

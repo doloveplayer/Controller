@@ -24,11 +24,11 @@
 
 #define LIMITBAND(input, max, min)   \
     {                                \
-        if (input > max)             \
+        if (input >= max)             \
         {                            \
             input = max;             \
         }                            \
-        else if (input < min)        \
+        else if (input <= min)        \
         {                            \
             input = min;             \
         }                            \
@@ -52,7 +52,24 @@ typedef unsigned int uint32_t;
   * @retval         none
   */
 template<typename T>
-T LinearMap(T value, T in_min, T in_max, T out_min, T out_max);
-
+T LinearMap(T value, T in_min, T in_max, T out_min, T out_max) {
+    T out_value = (value - in_min) / (in_max - in_min) * (out_max - out_min) + out_min;
+    if (out_min < out_max) {
+        if (out_value < out_min) {
+            out_value = out_min;
+        }
+        if (out_value > out_max) {
+            out_value = out_max;
+        }
+    } else {
+        if (out_value > out_min) {
+            out_value = out_min;
+        }
+        if (out_value < out_max) {
+            out_value = out_max;
+        }
+    }
+    return out_value;
+}
 
 #endif //COMMON_H

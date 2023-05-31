@@ -4,6 +4,7 @@
 #include "Common.h"
 #include <Windows.h>
 #include "Inc/PidController.h"
+#include "Inc/FuzzyController.h"
 
 
 #include <iostream>
@@ -51,75 +52,39 @@ unsigned int reverseBits(unsigned int a, int m) {
 }
 
 int main() {
-//    //基础pid
-//    TraditionalController::BaseFactors_t pid1 = {0.3, 0.5, 0, 100, 200, 80, 1};
-//    TraditionalController::BaseFactors_t pid2 = {0.2, 0.2, 0, 100, 200, 80, 1};
-//    TraditionalController::BaseFactors_t pid3 = {0.1, 0.5, 0, 100, 200, 80, 1};
-//    std::vector<TraditionalController::BaseFactors_t> pid={pid1,pid2,pid3};
-//    //分段pid
-//    std::vector<TraditionalController::Segment_t> seg={{2000,20},{20,5},{5,-2000}};
-//    TraditionalController::SegmentPidController spid(3,TraditionalController::PID_POSITION);
-//
-//    spid.PidInit(pid,seg);
-//    std::vector<fp32> out = {20,10,5};
-//    spid.advanced_factors_.SegmentForwardFeedInit(seg,out);
-//
-//    float aim=100;
-//    float ref=30;
-//
-//    for(int i=0;i<20;i++)
-//    {
-//        ref = spid.PidSegmentCalc(aim,ref);
-//        printf("ref:%f\r\n",ref);
-//        Sleep(500);
-//    }
-//
-//    printf("good!");
+    //基础pid
+    TraditionalController::BaseFactors_t pid1 = {0.3, 0.5, 0, 200, 200, 80, 1};
+    TraditionalController::BaseFactors_t pid2 = {0.2, 0.2, 0, 200, 200, 80, 1};
+    TraditionalController::BaseFactors_t pid3 = {0.1, 0.5, 0, 200, 200, 80, 1};
+    std::vector<TraditionalController::BaseFactors_t> pid = {pid1, pid2, pid3};
+    //分段pid
+    std::vector<TraditionalController::Segment_t> seg = {{2000, 20},
+                                                         {20,   5},
+                                                         {5,    -2000}};
+    TraditionalController::SegmentPidController spid(3, TraditionalController::PID_POSITION);
 
-    // 1. 打印Hello World
-    printHelloWorld();
+    spid.PidInit(pid, seg);
+    std::vector<fp32> out = {20, 10, 5};
+    spid.advanced_factors_.SegmentForwardFeedInit(seg, out);
 
-    // 2. 从键盘输入一个年份，判断是否为闰年
-    int year;
-    printf("give me a year: ");
-    scanf("%d", &year);
+    TraditionalController::FuzzyFactorRange_t ffr = {{10, -6},
+                                                     {10, -6},
+                                                     {10, -6},
+                                                     {50,-50},
+                                                     {50,-50}
+                                                     };
+    TraditionalController::FuzzyPidController Fpid(TraditionalController::PID_POSITION);
+    Fpid.PidInit(pid1,ffr);
 
-    if (isLeapYear(year)) {
-        printf("yes run nian\n");
-    } else {
-        printf("no run nian\n");
+    float aim = 10;
+    float ref = 50;
+
+    for (int i = 0; i < 20; i++) {
+        ref = Fpid.FuzzyPIDCalc(aim, ref);
+        printf("ref:%f\r\n***********\r\n", ref);
+        Sleep(500);
     }
 
-    // 3. 从键盘输入一个数，判断是否为质数
-    int num;
-    printf("input a int num:");
-    scanf("%d", &num);
-
-    if (isPrime(num)) {
-        printf("yes zhishu\n");
-    } else {
-        printf("no zhishu\n");
-    }
-
-    // 4. 由a, b, c, d组合而成的无符号整数x
-    unsigned char a, b, c, d;
-    printf("input a four unsigned char data:");
-    scanf("%hhu %hhu %hhu %hhu", &a, &b, &c, &d);
-
-    unsigned int x = calculateX(a, b, c, d);
-    printf("x: %u\n", x);
-
-    // 5. 将a的低m位取反，高(32-m)位置0
-    unsigned int result;
-    unsigned int aaa;
-    unsigned int m;
-    printf("in put set and m is : ");
-    scanf("%u %u",&aaa, &m);
-
-    result = reverseBits(aaa, m);
-    printf("calc is: %u\n", result);
-
-    return 0;
-
+    printf("good!");
     return 0;
 }

@@ -205,7 +205,6 @@ namespace TraditionalController {
             return;
         }
         this->forward_feed_.segment_size = _out.size();
-        printf("out num : %d ", this->forward_feed_.segment_size);
     }
 
     fp32 AdvancedFactors::SegmentForwardFeed(fp32 _err) {

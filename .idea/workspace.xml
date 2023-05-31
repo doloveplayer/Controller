@@ -21,14 +21,18 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70315a79-d032-43b0-9f51-f78c54d61400" name="Changes" comment="增加了模糊控制器">
+    <list default="true" id="70315a79-d032-43b0-9f51-f78c54d61400" name="Changes" comment="修改了模糊pid">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CommonInc/Common.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/CommonInc/Common.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CommonInc/Common.h" beforeDir="false" afterPath="$PROJECT_DIR$/CommonInc/Common.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Testcode/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Testcode/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TraditionalController/Inc/FuzzyController.h" beforeDir="false" afterPath="$PROJECT_DIR$/TraditionalController/Inc/FuzzyController.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TraditionalController/Inc/PidController.h" beforeDir="false" afterPath="$PROJECT_DIR$/TraditionalController/Inc/PidController.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TraditionalController/Src/FuzzyController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/TraditionalController/Src/FuzzyController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TraditionalController/Src/PidController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/TraditionalController/Src/PidController.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Controller.dir/TraditionalController/Src/FuzzyController.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Controller.dir/TraditionalController/Src/FuzzyController.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Controller.dir/TraditionalController/Src/PidController.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Controller.dir/TraditionalController/Src/PidController.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Test.dir/Testcode/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Test.dir/Testcode/main.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Test.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Test.exe" afterDir="false" />
@@ -66,30 +70,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "File.Encoding",
-    "structure.view.defaults.are.configured": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="CMake 应用程序.Controller">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Controller" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Controller" TARGET_NAME="Controller" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Controller" RUN_TARGET_NAME="Test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -123,7 +122,9 @@
       <workItem from="1684488651769" duration="1036000" />
       <workItem from="1684751987590" duration="9437000" />
       <workItem from="1685320938418" duration="2421000" />
-      <workItem from="1685382941025" duration="24980000" />
+      <workItem from="1685382941025" duration="25230000" />
+      <workItem from="1685490755506" duration="5960000" />
+      <workItem from="1685500778378" duration="10471000" />
     </task>
     <task id="LOCAL-00001" summary="PID">
       <created>1682967702933</created>
@@ -181,7 +182,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685409524242</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="修改了模糊pid">
+      <created>1685447025551</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1685447025551</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -218,7 +226,8 @@
     <MESSAGE value="完成了新的功能加入" />
     <MESSAGE value="添加了readme" />
     <MESSAGE value="增加了模糊控制器" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加了模糊控制器" />
+    <MESSAGE value="修改了模糊pid" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改了模糊pid" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

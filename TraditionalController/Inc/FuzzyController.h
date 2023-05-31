@@ -12,8 +12,6 @@
 #include "Inc/PidController.h"
 
 namespace TraditionalController {
-
-
     /*********隶属度函数的选择*********/
 #define triangular 0//三角
 #define trapezoidal 1//梯形
@@ -29,7 +27,7 @@ namespace TraditionalController {
     static const fp32 PB = 3;
 
     static const fp32 Domain[7] = {NB, NM, NS, ZO, PS, PM, PB};
-
+    /****默认的误差以及误差变化率范围****/
     static const fp32 InEMin = -3.14f;
     static const fp32 InEMax = 3.14f;
     static const fp32 InERMin = -20.0f;
@@ -72,14 +70,29 @@ namespace TraditionalController {
                     PB, PM, PM, PM, PS, PS, PB
             };
 
+    typedef struct {
+        /*pid参数的范围*/
+        Segment_t kp_range_;
+        Segment_t ki_range_;
+        Segment_t kd_range_;
+        /*误差与误差变化率的范围*/
+        Segment_t e_range_;
+        Segment_t er_range_;
+    } FuzzyFactorRange_t;
+
     class FuzzyPidController : public SimplePidController {
     public:
-        FuzzyPidController( PidMode_e _pid_mode) {
-            this->pid_mode_ = _pid_mode;
+        FuzzyPidController(PidMode_e _pid_mode) : SimplePidController(_pid_mode), e_{0.0, 0.0}, er_(0.0), mapped_e(0.0),
+                                                  mapped_er(0.0),delat_kp_(0.0),delat_kd_(0.0),delat_ki_(0.0) {
+            this->fuzzy_factor_range_.e_range_ = {InEMax, InEMin};
+            this->fuzzy_factor_range_.er_range_ = {InERMax, InERMin};
+
 #if MEMBERSHIPFUNCTION == triangular
             //三角隶属度函数必定对应论域中两个元素
-            e_index.resize(2);
-            er_index.resize(2);
+            this->e_index_.resize(2, 0);
+            this->e_memberShip_.resize(2, 0.0);
+            this->er_index_.resize(2, 0);
+            this->er_memberShip_.resize(2, 0.0);
 #elif MEMBERSHIPFUNCTION == trapezoidal
             //梯形隶属度函数必定对应论域中两个元素
             e_index.resize(2);
@@ -91,25 +104,34 @@ namespace TraditionalController {
 #endif
         }
 
+        /**
+         * @brief          模糊PID类初始化函数
+         * @param[in]      std::vector<BaseFactors_t> &bfs: PID控制参数
+         * @param[in]
+         * @retval         none
+         */
+        void PidInit(BaseFactors_t &_bfs, FuzzyFactorRange_t &_fuzzy_factor_range);
+
         void FuzzyPIDController(fp32 _e, fp32 _er);
 
-        void FuzzyPIDCalc(fp32 _set, fp32 _ref);
+        fp32 FuzzyPIDCalc(fp32 _set, fp32 _ref);
 
+        /*pid的模糊增量*/
         fp32 delat_kp_;
         fp32 delat_ki_;
         fp32 delat_kd_;
 
-        BaseFactors_t fuzzy_factors;
+        FuzzyFactorRange_t fuzzy_factor_range_;
 
-        fp32 e_[2];
-        fp32 er_;
-        fp32 mapped_e;
-        fp32 mapped_er;
+        fp32 e_[2];//误差
+        fp32 er_;//误差变化率
+        fp32 mapped_e;//映射到论域的误差
+        fp32 mapped_er;//映射到论域的误差变化率
 
         std::vector<fp32> e_memberShip_;//误差的隶属度
-        std::vector<int8_t> e_index;//误差隶属度对应位置
+        std::vector<int8_t> e_index_;//误差隶属度对应位置
         std::vector<fp32> er_memberShip_;
-        std::vector<int8_t> er_index;
+        std::vector<int8_t> er_index_;
     };
 }
 
