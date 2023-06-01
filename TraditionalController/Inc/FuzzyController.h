@@ -135,7 +135,7 @@ namespace TraditionalController {
         std::map<int8_t,fp32> e_membership_index_;
         std::vector<fp32> e_memberShip_;//误差的隶属度
         std::vector<int8_t> e_index_;//误差隶属度对应位置
-        std::map<int8_t,std::vector<fp32>> er_membership_index_;
+        std::map<int8_t,fp32> er_membership_index_;
         std::vector<fp32> er_memberShip_;
         std::vector<int8_t> er_index_;
     };
