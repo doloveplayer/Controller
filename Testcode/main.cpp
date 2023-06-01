@@ -5,7 +5,7 @@
 #include <Windows.h>
 #include "Inc/PidController.h"
 #include "Inc/FuzzyController.h"
-
+#include <chrono>
 
 #include <iostream>
 
@@ -70,17 +70,22 @@ int main() {
     TraditionalController::FuzzyFactorRange_t ffr = {{10, -6},
                                                      {10, -6},
                                                      {10, -6},
-                                                     {50,-50},
-                                                     {50,-50}
-                                                     };
+                                                     {50, -50},
+                                                     {50, -50}
+    };
     TraditionalController::FuzzyPidController Fpid(TraditionalController::PID_POSITION);
-    Fpid.PidInit(pid1,ffr);
+    Fpid.PidInit(pid1, ffr);
 
     float aim = 10;
     float ref = 50;
 
     for (int i = 0; i < 20; i++) {
-        ref = Fpid.FuzzyPIDCalc(aim, ref);
+        std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+//        ref = Fpid.FuzzyPIDCalc(aim, ref);
+        ref = spid.PidSegmentCalc(aim, ref);
+        std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::ratio<1, 1>> duration_s(t2 - t1);
+        std::cout << duration_s.count() << "seconds" << std::endl;
         printf("ref:%f\r\n***********\r\n", ref);
         Sleep(500);
     }

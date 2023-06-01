@@ -14,7 +14,7 @@
 
 namespace TraditionalController {
     /*********隶属度函数的选择*********/
-#define MEMBERSHIP_STEP 1.0f //隶属度步长 步长越大稳定性越好 越吃算力 越小就反之 不能小于 0.5
+#define MEMBERSHIP_STEP 3.0f //隶属度步长 步长越大稳定性越好 越吃算力 越小就反之 不能小于 0.5
 #define triangular 0//三角
 #define trapezoidal 1//梯形
 #define gaussian 2//高斯

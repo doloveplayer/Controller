@@ -21,14 +21,18 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70315a79-d032-43b0-9f51-f78c54d61400" name="Changes" comment="优化了模糊pid">
+    <list default="true" id="70315a79-d032-43b0-9f51-f78c54d61400" name="Changes" comment="优化了模糊pid的隶属度计算">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testcode/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Testcode/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TraditionalController/Inc/FuzzyController.h" beforeDir="false" afterPath="$PROJECT_DIR$/TraditionalController/Inc/FuzzyController.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TraditionalController/Src/FuzzyController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/TraditionalController/Src/FuzzyController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-05-30T10-19-02-0282.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Controller.dir/TraditionalController/Src/FuzzyController.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Controller.dir/TraditionalController/Src/FuzzyController.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Test.dir/Testcode/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Test.dir/Testcode/main.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Test.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Test.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/libController.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/libController.a" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +126,7 @@
       <workItem from="1685490755506" duration="5960000" />
       <workItem from="1685500778378" duration="17365000" />
       <workItem from="1685503134705" duration="4228000" />
-      <workItem from="1685638803123" duration="2511000" />
+      <workItem from="1685638803123" duration="4094000" />
     </task>
     <task id="LOCAL-00001" summary="PID">
       <created>1682967702933</created>
@@ -201,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685525166168</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="优化了模糊pid的隶属度计算">
+      <created>1685641395933</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1685641395933</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,7 +251,8 @@
     <MESSAGE value="增加了模糊控制器" />
     <MESSAGE value="修改了模糊pid" />
     <MESSAGE value="优化了模糊pid" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化了模糊pid" />
+    <MESSAGE value="优化了模糊pid的隶属度计算" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化了模糊pid的隶属度计算" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
