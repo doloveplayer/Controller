@@ -84,11 +84,6 @@
   }
 }</component>
   <component name="RunManager" selected="CMake 应用程序.Controller">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Controller" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Controller" TARGET_NAME="Controller" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Controller" RUN_TARGET_NAME="Test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -126,7 +121,9 @@
       <workItem from="1685490755506" duration="5960000" />
       <workItem from="1685500778378" duration="17365000" />
       <workItem from="1685503134705" duration="4228000" />
-      <workItem from="1685638803123" duration="4094000" />
+      <workItem from="1685638803123" duration="6866000" />
+      <workItem from="1685752063370" duration="3115000" />
+      <workItem from="1685780475256" duration="5000" />
     </task>
     <task id="LOCAL-00001" summary="PID">
       <created>1682967702933</created>
@@ -212,7 +209,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685641395933</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="优化了模糊pid的隶属度计算">
+      <created>1685643087444</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1685643087444</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

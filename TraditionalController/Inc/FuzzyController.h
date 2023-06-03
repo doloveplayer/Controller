@@ -14,7 +14,7 @@
 
 namespace TraditionalController {
     /*********隶属度函数的选择*********/
-#define MEMBERSHIP_STEP 3.0f //隶属度步长 步长越大稳定性越好 越吃算力 越小就反之 不能小于 0.5
+#define MEMBERSHIP_STEP 4.0f //隶属度步长 步长越大 越小消耗算力 但是越精确
 #define triangular 0//三角
 #define trapezoidal 1//梯形
 #define gaussian 2//高斯
@@ -34,7 +34,11 @@ namespace TraditionalController {
     static const fp32 InEMax = 3.14f;
     static const fp32 InERMin = -20.0f;
     static const fp32 InERMax = 20.0f;
-
+    /******pid清晰化的权重******/
+    /**给的权重越大作用效果越明显**/
+#define KpRight 0.001
+#define KiRight 0.001
+#define KdRight 0.0005
 
     /***********Kp规则表***********/
     static const float KpRulesTable[7][7] =
@@ -85,7 +89,8 @@ namespace TraditionalController {
     class FuzzyPidController : public SimplePidController {
     public:
         FuzzyPidController(PidMode_e _pid_mode) : SimplePidController(_pid_mode), e_{0.0, 0.0}, er_(0.0), mapped_e(0.0),
-                                                  mapped_er(0.0),delat_kp_(0.0),delat_kd_(0.0),delat_ki_(0.0), pid_mapping_factor_(1){
+                                                  mapped_er(0.0), delat_kp_(0.0), delat_kd_(0.0), delat_ki_(0.0),
+                                                  pid_mapping_factor_(1) {
             this->fuzzy_factor_range_.e_range_ = {InEMax, InEMin};
             this->fuzzy_factor_range_.er_range_ = {InERMax, InERMin};
 
@@ -114,6 +119,10 @@ namespace TraditionalController {
          */
         void PidInit(BaseFactors_t &_bfs, FuzzyFactorRange_t &_fuzzy_factor_range);
 
+        void CalculateMembership();
+
+        void CalculateFuzzyRules();
+
         void FuzzyPIDController(fp32 _e, fp32 _er);
 
         fp32 FuzzyPIDCalc(fp32 _set, fp32 _ref);
@@ -132,10 +141,10 @@ namespace TraditionalController {
         fp32 mapped_e;//映射到论域的误差
         fp32 mapped_er;//映射到论域的误差变化率
 
-        std::map<int8_t,fp32> e_membership_index_;
+        std::map<int8_t, fp32> e_membership_index_;
         std::vector<fp32> e_memberShip_;//误差的隶属度
         std::vector<int8_t> e_index_;//误差隶属度对应位置
-        std::map<int8_t,fp32> er_membership_index_;
+        std::map<int8_t, fp32> er_membership_index_;
         std::vector<fp32> er_memberShip_;
         std::vector<int8_t> er_index_;
     };
