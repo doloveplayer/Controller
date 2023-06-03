@@ -8,49 +8,6 @@
 #include <chrono>
 
 #include <iostream>
-
-// 打印Hello World
-void printHelloWorld() {
-    std::cout << "Hello World" << std::endl;
-}
-
-// 判断是否为闰年
-bool isLeapYear(int year) {
-    if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
-        return true; // 是闰年
-    } else {
-        return false; // 不是闰年
-    }
-}
-
-// 判断是否为质数
-bool isPrime(int num) {
-    if (num <= 1) {
-        return false; // 不是质数
-    }
-
-    for (int i = 2; i * i <= num; i++) {
-        if (num % i == 0) {
-            return false; // 不是质数
-        }
-    }
-
-    return true; // 是质数
-}
-
-// 计算由a, b, c, d组合而成的无符号整数x
-unsigned int calculateX(unsigned char a, unsigned char b, unsigned char c, unsigned char d) {
-    unsigned int x = (static_cast<unsigned int>(a) << 24) | (static_cast<unsigned int>(b) << 16) |
-                     (static_cast<unsigned int>(c) << 8) | static_cast<unsigned int>(d);
-    return x;
-}
-
-// 将a的低m位取反，高(32-m)位置0
-unsigned int reverseBits(unsigned int a, int m) {
-    unsigned int mask = (1u << m) - 1u;
-    return (~a & mask);
-}
-
 int main() {
     //基础pid
     TraditionalController::BaseFactors_t pid1 = {0.3, 0.5, 0, 200, 200, 80, 1};
