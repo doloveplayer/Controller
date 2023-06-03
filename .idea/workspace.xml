@@ -23,16 +23,7 @@
   <component name="ChangeListManager">
     <list default="true" id="70315a79-d032-43b0-9f51-f78c54d61400" name="Changes" comment="优化了模糊pid的隶属度计算">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testcode/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Testcode/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TraditionalController/Inc/FuzzyController.h" beforeDir="false" afterPath="$PROJECT_DIR$/TraditionalController/Inc/FuzzyController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TraditionalController/Src/FuzzyController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/TraditionalController/Src/FuzzyController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Controller.dir/TraditionalController/Src/FuzzyController.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Controller.dir/TraditionalController/Src/FuzzyController.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Test.dir/Testcode/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Test.dir/Testcode/main.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Test.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Test.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/libController.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/libController.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TraditionalController/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/TraditionalController/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +114,7 @@
       <workItem from="1685503134705" duration="4228000" />
       <workItem from="1685638803123" duration="6866000" />
       <workItem from="1685752063370" duration="3115000" />
-      <workItem from="1685780475256" duration="5000" />
+      <workItem from="1685780475256" duration="913000" />
     </task>
     <task id="LOCAL-00001" summary="PID">
       <created>1682967702933</created>
@@ -216,7 +207,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685643087444</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="优化了模糊pid的隶属度计算">
+      <created>1685780488156</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1685780488156</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
